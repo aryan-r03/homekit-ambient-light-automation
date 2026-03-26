@@ -31,18 +31,22 @@ struct RelaySwitch : Service::Switch {
 void setup() {
 
   Serial.begin(115200);
-
-  homeSpan.begin(Category::Lighting, "ESP32 Relay");
+  
+  pinMode(RELAY_PIN, OUTPUT);
+  digitalWrite(RELAY_PIN, LOW);
+  homeSpan.setPairingCode("46637726");
+  
+  homeSpan.begin(Category::Lighting, "ESP32
 
   new SpanAccessory();
-
     new Service::AccessoryInformation();
       new Characteristic::Name("LED Strip Relay");
       new Characteristic::Manufacturer("ESP32");
       new Characteristic::SerialNumber("123-ABC");
       new Characteristic::Model("RelaySwitch");
       new Characteristic::FirmwareRevision("1.0");
-
+      new Characteristic::Identify();
+  
     new RelaySwitch();
 }
 
